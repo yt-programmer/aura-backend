@@ -14,13 +14,13 @@ app.use(helmet());
 app.use(express.json());
 const rateLimit = require("express-rate-limit");
 
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000,
-//   max: 100,
-//   message: "Too many requests from this IP",
-// });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests from this IP",
+});
 
-// app.use("/api", limiter);
+app.use("/api", limiter);
 const port = process.env.PORT || 5000;
 const URL = process.env.MONGO_URL;
 const httpStatus = require("./utils/httpStatus");
