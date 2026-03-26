@@ -24,9 +24,9 @@ const getProducts = asyncWrapper(async (req, res) => {
 });
 
 const createProduct = asyncWrapper(async (req, res, next) => {
-  const { name, description, image, price } = req.body;
+  const { name, description, image, price, colors, size } = req.body;
 
-  if (!name || !description || !image || !price) {
+  if (!name || !description || !image || !price || !colors || !size) {
     return next(
       appError.create("All fields are required", 400, httpStatus.FAIL),
     );
@@ -37,7 +37,10 @@ const createProduct = asyncWrapper(async (req, res, next) => {
     name,
     description,
     image,
+    colors,
+    size,
   });
+
   await product.save();
 
   const products = await Product.find({}, { __v: 0 }).sort({ createdAt: -1 });
@@ -48,10 +51,10 @@ const createProduct = asyncWrapper(async (req, res, next) => {
   });
 });
 const editProduct = asyncWrapper(async (req, res, next) => {
-  const { name, description, image, price } = req.body;
+  const { name, description, image, price, colors, size } = req.body;
   const product = await Product.findOneAndUpdate(
     { _id: req.params.id },
-    { _id: req.params.id, name, description, image, price },
+    { _id: req.params.id, name, description, image, price, colors, size },
   );
 
   if (!product) {

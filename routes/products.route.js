@@ -32,6 +32,8 @@ router
       body("name").notEmpty().withMessage("Name is required"),
       body("description").notEmpty().withMessage("Description is required"),
       body("image").isURL().withMessage("Image must be a valid URL"),
+      body("colors").isArray().withMessage("Colors must be an array"),
+      body("size").isArray().withMessage("Size must be an array"),
     ],
     validateRequest,
     createProduct,
@@ -53,7 +55,11 @@ router
         .notEmpty()
         .withMessage("Description is required"),
 
-      body("image").optional().isURL().withMessage("Image must be a valid URL"),
+      body("colors")
+        .optional()
+        .isArray()
+        .withMessage("Colors must be an array"),
+      body("size").optional().isArray().withMessage("Size must be an array"),
     ],
     validateRequest,
     editProduct,
